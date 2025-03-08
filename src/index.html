@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8 Марта</title>
+    <style>
+      :root {
+        --container-width: min(90vw, 1200px);
+        --container-height: min(80vh, 800px);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #ffe6f2;
+        cursor: pointer;
+        overflow: hidden;
+      }
+
+      .container {
+        position: relative;
+        width: var(--container-width);
+        height: var(--container-height);
+      }
+
+      .envelope {
+        position: absolute;
+        width: min(60vw, 400px);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 1s ease;
+        z-index: 3;
+      }
+
+      .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: 0;
+        z-index: 2;
+        animation: none;
+      }
+
+      .card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 1;
+        transition: opacity 1s ease 2s;
+        object-fit: contain;
+      }
+
+      .open .envelope {
+        transform: translate(-50%, -200%);
+        opacity: 0;
+      }
+
+      .open .overlay {
+        animation: fadeOverlay 2.5s forwards;
+      }
+
+      .open .card {
+        opacity: 1;
+      }
+
+      @keyframes fadeOverlay {
+        0% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* Адаптив для мобильных */
+      @media (max-width: 768px) {
+        :root {
+          --container-width: 95vw;
+          --container-height: 70vh;
+        }
+
+        .envelope {
+          width: 40vw;
+        }
+
+        .greeting-text h1 {
+          font-size: 1.8rem !important;
+        }
+
+        .greeting-text p {
+          font-size: 1.1rem !important;
+        }
+      }
+
+      /* Для очень маленьких экранов */
+      @media (max-width: 480px) {
+        :root {
+          --container-height: 60vh;
+        }
+
+        .greeting-text h1 {
+          font-size: 1.5rem !important;
+        }
+      }
+
+      /* Стили для текста */
+      .greeting-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #d4005d;
+        text-shadow: 1px 1px 2px white;
+        width: 80%;
+      }
+
+      .greeting-text h1 {
+        font-size: 2.5rem;
+        margin: 0 0 20px 0;
+      }
+
+      .greeting-text p {
+        font-size: 1.3rem;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img src="конверт.png" class="envelope" onclick="openCard()" />
+      <div class="overlay"></div>
+      <div class="card">
+        <img src="открытка.jpg" style="width: 100%" />
+        <div class="greeting-text">
+          <h1>С 8 Марта!</h1>
+          <p>Пусть каждый день будет наполнен радостью и цветами!</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openCard() {
+        const container = document.querySelector(".container");
+        container.classList.add("open");
+
+        // Дополнительные эффекты (опционально)
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+          });
+        }, 2000);
+      }
+    </script>
+
+    <!-- Опционально: добавьте конфетти -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  </body>
+</html>
